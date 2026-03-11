@@ -1,72 +1,132 @@
 # Multi-Agent Scientific Paper Analysis System
 
-A multi-agent AI system that automatically analyzes scientific papers and generates comprehensive, structured reports. Built for CS 5100 — Foundations of Artificial Intelligence.
+A multi-agent AI system that automatically analyzes scientific papers and generates comprehensive structured reports. Each agent specializes in a distinct analysis task — summarization, citation extraction, methodology identification, critical analysis, and report synthesis — and they work together in a pipeline to process any research paper.
 
-## Architecture
+Built for EECE 5644 – Machine Learning, Northeastern University.
 
-Five specialized agents, each handling a distinct analysis task:
+---
 
-| Agent | Task | Technique |
-|-------|------|-----------|
-| **Summarization Agent** | Generates concise paper summaries | BART (facebook/bart-large-cnn) |
-| **Citation Analysis Agent** | Extracts references + builds knowledge graphs | Regex + NetworkX |
-| **Methodology Extractor Agent** | Identifies datasets, metrics, architectures | NER (spaCy) + keyword matching |
-| **Critical Analysis Agent** | Identifies limitations and future directions | Pattern matching on discussion sections |
-| **Coordinator Agent** | Synthesizes all outputs into a unified report | Multi-document synthesis |
+## What It Does
 
-## Setup
+Given a scientific paper (PDF, arXiv ID, or plain text), the system produces:
+- A concise **summary** of the paper
+- A **citation knowledge graph** showing relationships between references
+- Extracted **datasets, evaluation metrics, and model architectures**
+- Identified **limitations and future research directions**
+- A unified **structured report** combining all of the above
+
+---
+
+## Agent Architecture
+
+| Agent | Responsibility | Technique |
+|-------|---------------|-----------|
+| Summarization Agent | Generates concise paper summaries | BART (`facebook/bart-large-cnn`) |
+| Citation Analysis Agent | Extracts references + builds knowledge graph | Regex + NetworkX |
+| Methodology Extractor Agent | Identifies datasets, metrics, architectures | spaCy NER + keyword matching |
+| Critical Analysis Agent | Finds limitations and future directions | Pattern matching on discussion sections |
+| Coordinator Agent | Synthesizes all outputs into a final report | Multi-document synthesis |
+
+---
+
+## Prerequisites
+
+- Python 3.9+
+- pip
+- Git
+
+---
+
+## Installation
 
 ```bash
-# Clone the repo and install dependencies
+# 1. Clone the repository
+git clone https://github.com/yourusername/paper-analysis.git
+cd paper-analysis
+
+# 2. Install dependencies
 pip install -r requirements.txt
+
+# 3. Download the spaCy language model
 python -m spacy download en_core_web_sm
 ```
 
+---
+
 ## Usage
 
+### Run on the built-in demo (no internet or PDF needed)
 ```bash
-# Run on built-in demo paper (no internet needed)
 python main.py --demo
+```
+This runs the pipeline on an excerpt from *"Attention Is All You Need"* (Vaswani et al., 2017, NeurIPS) — the paper that introduced the Transformer architecture. It is included as a built-in demo to verify the pipeline works correctly without requiring any external files.
 
-# Analyze a local PDF
+### Analyze a local PDF
+```bash
 python main.py --pdf path/to/paper.pdf
+```
 
-# Analyze any arXiv paper by ID
+### Analyze any arXiv paper by ID
+```bash
 python main.py --arxiv 1706.03762
+```
 
-# Run evaluation metrics
+### Run evaluation metrics
+```bash
 python evaluate.py
 ```
 
+---
+
 ## Output
 
-Running the pipeline produces:
-- `outputs/analysis_report.md` — full structured report
-- `outputs/citation_graph.png` — knowledge graph visualization
-- `outputs/raw_outputs.json` — raw JSON from all agents
-- `outputs/evaluation_results.json` — ROUGE + P/R/F1 scores
+All outputs are saved to the `outputs/` folder:
 
-## Evaluation
+| File | Description |
+|------|-------------|
+| `analysis_report.md` | Full structured analysis report |
+| `citation_graph.png` | Knowledge graph of paper references |
+| `raw_outputs.json` | Raw JSON from all agents |
+| `evaluation_results.json` | ROUGE + precision/recall/F1 scores |
 
-- **Summarization**: ROUGE-1, ROUGE-2, ROUGE-L vs reference abstracts
-- **Extraction**: Precision, Recall, F1 for datasets/metrics/architectures
-- **Ablation study**: Compare full system vs. removing individual agents
+---
 
 ## Project Structure
 
 ```
 paper_analysis/
-├── main.py                  # Pipeline entry point
-├── evaluate.py              # Evaluation metrics
-├── paper_loader.py          # PDF + arXiv loading utilities
-├── requirements.txt
+├── main.py                   # Pipeline entry point
+├── evaluate.py               # Evaluation metrics (ROUGE, P/R/F1)
+├── paper_loader.py           # PDF and arXiv loading utilities
+├── requirements.txt          # Python dependencies
+├── README.md
 ├── agents/
 │   ├── __init__.py
-│   ├── summarizer.py        # Agent 1: Summarization
-│   ├── citation_agent.py    # Agent 2: Citation Analysis
-│   ├── methodology_agent.py # Agent 3: Methodology Extraction
-│   ├── critical_agent.py    # Agent 4: Critical Analysis
-│   └── coordinator.py       # Agent 5: Coordinator
-├── data/                    # Downloaded/cached PDFs
-└── outputs/                 # Generated reports and graphs
+│   ├── summarizer.py         # Agent 1: Summarization (BART)
+│   ├── citation_agent.py     # Agent 2: Citation Analysis
+│   ├── methodology_agent.py  # Agent 3: Methodology Extraction
+│   ├── critical_agent.py     # Agent 4: Critical Analysis
+│   └── coordinator.py        # Agent 5: Coordinator (in progress)
+├── data/                     # Cached downloaded PDFs
+└── outputs/                  # Generated reports and graphs
 ```
+
+---
+
+## Known Issues
+
+- BART summarization returns empty output on Apple Silicon when using the MPS backend. Fixed by forcing CPU inference (`device=-1`). This is a known PyTorch/Transformers compatibility issue.
+- Very long papers (50+ pages) may require additional chunking tuning in `summarizer.py`.
+
+---
+
+## License
+
+This project is for academic purposes only (EECE 5644 coursework). Not licensed for commercial use.
+
+---
+
+## Support & Contact
+
+Siham Boumalak — Northeastern University, MS Artificial Intelligence  
+For questions or feedback, open an issue on this repository.
