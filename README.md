@@ -1,6 +1,6 @@
 # Multi-Agent Scientific Paper Analysis System
 
-A multi-agent AI system that automatically analyzes scientific papers and generates comprehensive structured reports. Built for EECE 5644 — Machine Learning.
+A multi-agent AI system that automatically analyzes scientific papers and generates comprehensive, structured reports. Built for CS 5100 — Foundations of Artificial Intelligence.
 
 ## Architecture
 
