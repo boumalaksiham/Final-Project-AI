@@ -1,0 +1,74 @@
+{
+  "summary": {
+    "summary": "The dominant sequence transduction models are based on complex recurrent or convolutional neural networks that include an encoder and a decoder. We propose a new simple network architecture, the Transformer, based solely on attention mechanisms. The model outperforms the best previously reported models including ensembles by more than 2.0 BLEU.",
+    "chunk_summaries": [
+      "The dominant sequence transduction models are based on complex recurrent or convolutional neural networks that include an encoder and a decoder. We propose a new simple network architecture, the Transformer, based solely on attention mechanisms. The model outperforms the best previously reported models including ensembles by more than 2.0 BLEU."
+    ]
+  },
+  "citations": {
+    "paper_title": "Attention Is All You Need",
+    "num_references": 5,
+    "references": [
+      "Bahdanau, D., Cho, K., Bengio, Y. Neural machine translation by jointly learning to align and translate. ICLR 2015.",
+      "Hochreiter, S., Schmidhuber, J. Long short-term memory. Neural Computation, 1997.",
+      "Sutskever, I., Vinyals, O., Le, Q. Sequence to sequence learning with neural networks. NeurIPS 2014.",
+      "Cho, K., et al. Learning phrase representations using RNN encoder-decoder. EMNLP 2014.",
+      "Devlin, J., Chang, M., Lee, K., Toutanova, K. BERT: Pre-training of deep bidirectional transformers. NAACL 2019."
+    ],
+    "graph_nodes": 6,
+    "graph_edges": 5,
+    "graph_image": "outputs/citation_graph.png"
+  },
+  "methodology": {
+    "datasets_identified": [
+      "cifar",
+      "mnist",
+      "wmt"
+    ],
+    "evaluation_metrics": [
+      "accuracy",
+      "bleu",
+      "em",
+      "f1",
+      "f1-score",
+      "ppl"
+    ],
+    "model_architectures": [
+      "attention",
+      "bert",
+      "decoder",
+      "encoder",
+      "resnet",
+      "transformer"
+    ],
+    "ner_entities": {
+      "ORG": [
+        "I.",
+        "Toutanova",
+        "Transformer",
+        "BERT",
+        "ResNet",
+        "CIFAR",
+        "BLEU",
+        "WMT",
+        "RNN",
+        "S."
+      ],
+      "GPE": [
+        "F1",
+        "Cho"
+      ]
+    },
+    "methodology_excerpt": "approaches in\nsequence modeling. Numerous efforts have since continued to push the boundaries of recurrent\nlanguage models and encoder-decoder architectures.\n\nMethodology: We trained on the standard WMT 2014 English-German dataset consisting of\nabout 4.5 million sentence pairs. We used the Adam optimizer with beta1=0.9, beta2=0.98.\nWe used multi-head attention with 8 heads. The model was evaluated using BLEU score.\nThe Transformer uses BERT-style embeddings and ResNet skip connections for stabil..."
+  },
+  "critical": {
+    "limitations": [
+      "No explicit limitations section detected in this paper."
+    ],
+    "future_directions": [
+      "We are excited about the future of attention-based models and\nplan to apply them to other problems."
+    ],
+    "num_limitations_found": 1,
+    "num_future_directions_found": 1
+  }
+}

@@ -1,0 +1,12 @@
+transformers>=4.30.0
+torch>=2.0.0
+sentencepiece
+spacy
+PyMuPDF
+networkx
+matplotlib
+requests
+arxiv
+rouge-score
+scikit-learn
+tqdm
