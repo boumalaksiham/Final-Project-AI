@@ -2,7 +2,7 @@
 
 A multi-agent AI system that automatically analyzes scientific papers and generates comprehensive structured reports. Each agent specializes in a distinct analysis task — summarization, citation extraction, methodology identification, critical analysis, and report synthesis — and they work together in a pipeline to process any research paper.
 
-Built for EECE 5644 – Machine Learning, Northeastern University.
+Built for CS 5100 – Foundations of Artificial Intelligence.
 
 ---
 
@@ -55,7 +55,7 @@ python -m spacy download en_core_web_sm
 
 ## Usage
 
-### Run on the built-in demo (no internet or PDF needed)
+### Run on the built-in demo
 ```bash
 python main.py --demo
 ```
@@ -115,18 +115,16 @@ paper_analysis/
 
 ## Known Issues
 
-- BART summarization returns empty output on Apple Silicon when using the MPS backend. Fixed by forcing CPU inference (`device=-1`). This is a known PyTorch/Transformers compatibility issue.
+- BART summarization returns empty output on Apple Silicon when using the MPS backend. Fixed by forcing CPU inference (`device=-1`). 
 - Very long papers (50+ pages) may require additional chunking tuning in `summarizer.py`.
 
 ---
 
 ## License
 
-This project is for academic purposes only (EECE 5644 coursework). Not licensed for commercial use.
+This project is for academic purposes only (CS 5100 coursework). Not licensed for commercial use.
 
 ---
 
-## Support & Contact
 
 Siham Boumalak — Northeastern University, MS Artificial Intelligence  
-For questions or feedback, open an issue on this repository.
