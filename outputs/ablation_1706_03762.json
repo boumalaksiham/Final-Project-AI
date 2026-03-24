@@ -1,0 +1,56 @@
+{
+  "paper_id": "1706.03762",
+  "ground_truth": "Attention Is All You Need",
+  "ablation_results": {
+    "full_system": {
+      "rouge1": 0.4583,
+      "rouge2": 0.1915,
+      "rougeL": 0.2708,
+      "dataset_f1": 0.8,
+      "metric_f1": 0.4444,
+      "model_f1": 1.0,
+      "num_references": 30,
+      "num_limitations": 1
+    },
+    "no_summarization": {
+      "rouge1": 0.0,
+      "rouge2": 0.0,
+      "rougeL": 0,
+      "dataset_f1": 0.8,
+      "metric_f1": 0.4444,
+      "model_f1": 1.0,
+      "num_references": 30,
+      "num_limitations": 1
+    },
+    "no_citation": {
+      "rouge1": 0.4583,
+      "rouge2": 0.1915,
+      "rougeL": 0.2708,
+      "dataset_f1": 0.8,
+      "metric_f1": 0.4444,
+      "model_f1": 1.0,
+      "num_references": 0,
+      "num_limitations": 1
+    },
+    "no_methodology": {
+      "rouge1": 0.4583,
+      "rouge2": 0.1915,
+      "rougeL": 0.2708,
+      "dataset_f1": 0.0,
+      "metric_f1": 0.0,
+      "model_f1": 0.0,
+      "num_references": 30,
+      "num_limitations": 1
+    },
+    "no_critical": {
+      "rouge1": 0.4583,
+      "rouge2": 0.1915,
+      "rougeL": 0.2708,
+      "dataset_f1": 0.8,
+      "metric_f1": 0.4444,
+      "model_f1": 1.0,
+      "num_references": 30,
+      "num_limitations": 0
+    }
+  }
+}

@@ -28,7 +28,7 @@ def load_arxiv(arxiv_id: str, save_dir: str = "data") -> tuple[str, str]:
     """
     Download and extract text from an arXiv paper.
     arxiv_id: e.g. '1706.03762' or 'https://arxiv.org/abs/1706.03762'
-    Returns: (text, pdf_path)
+    Returns: (text, pdf_path) where text is prepended with ARXIV_TITLE: line
     """
     # Normalize ID
     arxiv_id = arxiv_id.strip()
@@ -48,6 +48,21 @@ def load_arxiv(arxiv_id: str, save_dir: str = "data") -> tuple[str, str]:
         print(f"[Loader] Using cached file: {save_path}")
 
     text = load_pdf(save_path)
+
+    # Fetch title from arXiv API and prepend it so agents can find it reliably
+    try:
+        api_url = f"https://export.arxiv.org/api/query?id_list={arxiv_id}"
+        with urllib.request.urlopen(api_url, timeout=5) as resp:
+            api_text = resp.read().decode("utf-8")
+        # The real title is inside <entry><title>, skip the top-level feed <title>
+        entry_match = re.search(r"<entry>.*?<title>([^<]+)</title>", api_text, re.DOTALL)
+        if entry_match:
+            title = entry_match.group(1).strip().replace("\n", " ")
+            text = f"ARXIV_TITLE: {title}\n\n" + text
+            print(f"[Loader] Title: {title}")
+    except Exception:
+        pass  # silently skip if API call fails
+
     return text, save_path
 
 

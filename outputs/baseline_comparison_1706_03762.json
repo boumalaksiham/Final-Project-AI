@@ -1,0 +1,26 @@
+{
+  "paper_id": "1706.03762",
+  "paper": "Attention Is All You Need",
+  "baseline": {
+    "rouge": {
+      "rouge1": 0.0,
+      "rouge2": 0.0,
+      "rougeL": 0
+    },
+    "dataset_f1": 0.6667,
+    "metric_f1": 0.4286,
+    "model_f1": 0.8,
+    "num_references": 30
+  },
+  "multi_agent": {
+    "rouge": {
+      "rouge1": 0.4583,
+      "rouge2": 0.1915,
+      "rougeL": 0.2708
+    },
+    "dataset_f1": 0.8,
+    "metric_f1": 0.4444,
+    "model_f1": 1.0,
+    "num_references": 30
+  }
+}

@@ -1,74 +1,102 @@
 {
   "summary": {
-    "summary": "The dominant sequence transduction models are based on complex recurrent or convolutional neural networks that include an encoder and a decoder. We propose a new simple network architecture, the Transformer, based solely on attention mechanisms. The model outperforms the best previously reported models including ensembles by more than 2.0 BLEU.",
+    "summary": "GPT-3 is an autoregressive language model with 175 billion parameters, 10x more than any previous non-sparse language model. It achieves strong performance on many NLP datasets, including translation, question-answering, and cloze tasks. It can generate samples of news articles which human evaluators have dif\ufb01culty distinguishing from articles written by humans.",
     "chunk_summaries": [
-      "The dominant sequence transduction models are based on complex recurrent or convolutional neural networks that include an encoder and a decoder. We propose a new simple network architecture, the Transformer, based solely on attention mechanisms. The model outperforms the best previously reported models including ensembles by more than 2.0 BLEU."
+      "GPT-3 is an autoregressive language model with 175 billion parameters, 10x more than any previous non-sparse language model. It achieves strong performance on many NLP datasets, including translation, question-answering, and cloze tasks. It can generate samples of news articles which human evaluators have dif\ufb01culty distinguishing from articles written by humans."
     ]
   },
   "citations": {
-    "paper_title": "Attention Is All You Need",
-    "num_references": 5,
+    "paper_title": "Language Models are Few-Shot Learners",
+    "num_references": 30,
     "references": [
-      "Bahdanau, D., Cho, K., Bengio, Y. Neural machine translation by jointly learning to align and translate. ICLR 2015.",
-      "Hochreiter, S., Schmidhuber, J. Long short-term memory. Neural Computation, 1997.",
-      "Sutskever, I., Vinyals, O., Le, Q. Sequence to sequence learning with neural networks. NeurIPS 2014.",
-      "Cho, K., et al. Learning phrase representations using RNN encoder-decoder. EMNLP 2014.",
-      "Devlin, J., Chang, M., Lee, K., Toutanova, K. BERT: Pre-training of deep bidirectional transformers. NAACL 2019."
+      "Marcin Andrychowicz, Misha Denil, Sergio Gomez, Matthew W Hoffman, David Pfau, Tom Schaul, Brendan Shillingford, and Nando De Freitas. Learning to learn by gradient descent by gradient descent. In Advances in neural information processing systems, pages 3981\u20133989, 2016.",
+      "WeChat AI. Tr-mt (ensemble), December 2019.",
+      "Roee Aharoni, Melvin Johnson, and Orhan Firat. Massively multilingual neural machine translation. In Proceedings of the 2019 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies, Volume 1 (Long and Short Papers), 2019.",
+      "Su Lin Blodgett, Solon Barocas, Hal Daum\u00b4e III, and Hanna Wallach. Language (technology) is power: A critical survey of \u201cbias\u201d in nlp. arXiv preprint arXiv:2005.14050, 2020.",
+      "Jonathan Berant, Andrew Chou, Roy Frostig, and Percy Liang. Semantic parsing on freebase from question-answer pairs. In Proceedings of the 2013 conference on empirical methods in natural language processing, pages 1533\u20131544, 2013.",
+      "Luisa Bentivogli, Ido Dagan, Hoa Trang Dang, Danilo Giampiccolo, and Bernardo Magnini. The \ufb01fth PASCAL recognizing textual entailment challenge. 2009.",
+      "Stefano Baccianella, Andrea Esuli, and Fabrizio Sebastiani. Sentiwordnet 3.0: an enhanced lexical resource for sentiment analysis and opinion mining. In Lrec, volume 10, pages 2200\u20132204, 2010.",
+      "Roy Bar Haim, Ido Dagan, Bill Dolan, Lisa Ferro, Danilo Giampiccolo, Bernardo Magnini, and Idan Szpektor. The second PASCAL recognising textual entailment challenge. 2006.",
+      "Yonatan Bisk, Ari Holtzman, Jesse Thomason, Jacob Andreas, Yoshua Bengio, Joyce Chai, Mirella Lapata, Angeliki Lazaridou, Jonathan May, Aleksandr Nisnevich, et al. Experience grounds language. arXiv preprint arXiv:2004.10151, 2020.",
+      "Yoshua Bengio, Nicholas L\u00b4eonard, and Aaron C. Courville. Estimating or propagating gradients through stochastic neurons for conditional computation. Arxiv, 2013.",
+      "Yonatan Bisk, Rowan Zellers, Ronan Le Bras, Jianfeng Gao, and Yejin Choi. Piqa: Reasoning about physical commonsense in natural language. arXiv preprint arXiv:1911.11641, 2019.",
+      "Rich Caruana. Multitask learning. Machine learning, 28(1), 1997.",
+      "Susan Carey and Elsa Bartlett. Acquiring a single new word. Proceedings of the Stanford Child Language Conference, 1978.",
+      "Peter Clark, Isaac Cowhey, Oren Etzioni, Tushar Khot, Ashish Sabharwal, Carissa Schoenick, and Oyvind Tafjord. Think you have solved question answering? try arc, the ai2 reasoning challenge. ArXiv, abs/1803.05457, 2018.",
+      "Rewon Child, Scott Gray, Alec Radford, and Ilya Sutskever. Generating long sequences with sparse transformers, 2019.",
+      "Eunsol Choi, He He, Mohit Iyyer, Mark Yatskar, Wen-tau Yih, Yejin Choi, Percy Liang, and Luke Zettlemoyer. Quac : Question answering in context. Arxiv, 2018.",
+      "Christopher Clark, Kenton Lee, Ming-Wei Chang, Tom Kwiatkowski, Michael Collins, and Kristina Toutanova. BoolQ: Exploring the surprising dif\ufb01culty of natural yes/no questions. arXiv preprint arXiv:1905.10044, 2019.",
+      "Yen-Chun Chen, Linjie Li, Licheng Yu, Ahmed El Kholy, Faisal Ahmed, Zhe Gan, Yu Cheng, and Jingjing Liu. Uniter: Learning universal image-text representations. arXiv preprint arXiv:1909.11740, 2019.",
+      "Kate Crawford. The trouble with bias. NIPS 2017 Keynote, 2017.",
+      "Jacob Devlin, Ming-Wei Chang, Kenton Lee, and Kristina Toutanova. BERT: Pre-training of deep bidirectional transformers for language understanding. arXiv preprint arXiv:1810.04805, 2018. 68",
+      "Ido Dagan, Oren Glickman, and Bernardo Magnini. The PASCAL recognising textual entailment challenge. In Machine learning challenges. evaluating predictive uncertainty, visual object classi\ufb01cation, and recognising textual entailment, pages 177\u2013190. Springer, 2006.",
+      "Mostafa Dehghani, Stephan Gouws, Oriol Vinyals, Jakob Uszkoreit, and Lukasz Kaiser. Universal transformers. Arxiv, 2018.",
+      "Nadir Durrani, Barry Haddow, Philipp Koehn, and Kenneth Hea\ufb01eld. Edinburgh\u2019s phrase-based machine translation systems for wmt-14. In Proceedings of the Ninth Workshop on Statistical Machine Translation, pages 97\u2013104, 2014.",
+      "Andrew M. Dai and Quoc V. Le. Semi-supervised sequence learning. In Advances in neural information processing systems, 2015.",
+      "Marie-Catherine De Marneffe, Mandy Simons, and Judith Tonhauser. The CommitmentBank: Investigat- ing projection in naturally occurring discourse. 2019. To appear in proceedings of Sinn und Bedeutung 23. Data can be found at https://github.com/mcdm/CommitmentBank/.",
+      "Yan Duan, John Schulman, Xi Chen, Peter L. Bartlett, Ilya Sutskever, and Pieter Abbeel. Rl2: Fast reinforcement learning via slow reinforcement learning. ArXiv, abs/1611.02779, 2016.",
+      "Dheeru Dua, Yizhong Wang, Pradeep Dasigi, Gabriel Stanovsky, Sameer Singh, and Matt Gardner. Drop: A reading comprehension benchmark requiring discrete reasoning over paragraphs. arXiv preprint arXiv:1903.00161, 2019.",
+      "Zihang Dai, Zhilin Yang, Yiming Yang, Jaime G. Carbonell, Quoc V. Le, and Ruslan Salakhutdinov. Transformer-xl: Attentive language models beyond a \ufb01xed-length context. Arxiv, 2019.",
+      "Sergey Edunov, Myle Ott, Michael Auli, and David Grangier. Understanding back-translation at scale. arXiv preprint arXiv:1808.09381, 2018.",
+      "Chelsea Finn, Pieter Abbeel, and Sergey Levine. Model-agnostic meta-learning for fast adaptation of deep networks. ArXiv, abs/1703.03400, 2017."
     ],
-    "graph_nodes": 6,
-    "graph_edges": 5,
+    "graph_nodes": 31,
+    "graph_edges": 30,
     "graph_image": "outputs/citation_graph.png"
   },
   "methodology": {
     "datasets_identified": [
-      "cifar",
-      "mnist",
-      "wmt"
+      "arxiv",
+      "common crawl",
+      "glue",
+      "superglue"
     ],
     "evaluation_metrics": [
-      "accuracy",
-      "bleu",
       "em",
-      "f1",
-      "f1-score",
-      "ppl"
+      "ppl",
+      "roc",
+      "wer"
     ],
     "model_architectures": [
-      "attention",
-      "bert",
-      "decoder",
-      "encoder",
-      "resnet",
+      "gpt",
       "transformer"
     ],
     "ner_entities": {
       "ORG": [
-        "I.",
-        "Toutanova",
-        "Transformer",
-        "BERT",
-        "ResNet",
-        "CIFAR",
-        "BLEU",
-        "WMT",
-        "RNN",
-        "S."
+        "Winograd-Style Tasks",
+        "NLP",
+        "RNSS18",
+        "Completion Tasks",
+        "Language Modeling",
+        "\u2020Johns Hopkins University",
+        "D Total Compute",
+        "GPT-3",
+        "NLI",
+        "fed",
+        "YDY+19"
       ],
-      "GPE": [
-        "F1",
-        "Cho"
+      "WORK_OF_ART": [
+        "A Details of Common Crawl Filtering",
+        "Training Process",
+        "Measuring and Preventing Memorization Of Benchmarks"
+      ],
+      "PRODUCT": [
+        "F\nAdditional Samples",
+        "Representation"
       ]
     },
-    "methodology_excerpt": "approaches in\nsequence modeling. Numerous efforts have since continued to push the boundaries of recurrent\nlanguage models and encoder-decoder architectures.\n\nMethodology: We trained on the standard WMT 2014 English-German dataset consisting of\nabout 4.5 million sentence pairs. We used the Adam optimizer with beta1=0.9, beta2=0.98.\nWe used multi-head attention with 8 heads. The model was evaluated using BLEU score.\nThe Transformer uses BERT-style embeddings and ResNet skip connections for stabil..."
+    "methodology_excerpt": "method still requires task-speci\ufb01c \ufb01ne-tuning datasets of thousands or tens of\nthousands of examples. By contrast, humans can generally perform a new language task from only\na few examples or from simple instructions \u2013 something which current NLP systems still largely\nstruggle to do. Here we show that scaling up language models greatly improves task-agnostic,\nfew-shot performance, sometimes even reaching competitiveness with prior state-of-the-art \ufb01ne-\ntuning approaches. Speci\ufb01cally, we train GP..."
   },
   "critical": {
     "limitations": [
-      "No explicit limitations section detected in this paper."
+      "limitation to this approach is that while\nthe architecture is task-agnostic, there is still a need for task-speci\ufb01c datasets and task-speci\ufb01c \ufb01ne-tuning: to achieve\nstrong performance on a desired task typically requires \ufb01ne-tuning on a dataset of thousands to hundreds of thousands\nof examples speci\ufb01c to that task.",
+      "Removing this limitation would be desirable, for several reasons.",
+      "Aside from pointing\nto a conceptual limitation in our current NLP techniques, this adaptability has practical advantages \u2013 it allows humans\nto seamlessly mix together or switch between many tasks and skills, for example performing addition during a lengthy\ndialogue."
     ],
     "future_directions": [
-      "We are excited about the future of attention-based models and\nplan to apply them to other problems."
+      "No explicit future work section detected in this paper."
     ],
-    "num_limitations_found": 1,
+    "num_limitations_found": 3,
     "num_future_directions_found": 1
   }
 }

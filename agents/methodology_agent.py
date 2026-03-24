@@ -14,7 +14,10 @@ class MethodologyExtractorAgent:
         "imagenet", "cifar", "mnist", "coco", "squad", "glue", "superglue",
         "wikitext", "penn treebank", "conll", "arxiv", "pubmed", "common crawl",
         "openwebtext", "bookcorpus", "ms marco", "natural questions", "trivia",
-        "wmt", "multi30k", "voc", "ade20k", "cityscapes",
+        "wmt", "wmt14", "wmt 2014", "multi30k", "voc", "ade20k", "cityscapes",
+        "english-german", "english-french", "wsj", "wall street journal",
+        "newstest", "europarl", "ptb", "ontonotes", "snli", "multinli",
+        "sst", "imdb", "yelp", "amazon", "ag news", "dbpedia",
     ]
     METRIC_KEYWORDS = [
         "accuracy", "f1", "f1-score", "precision", "recall", "rouge",
