@@ -1,12 +1,12 @@
 # Multi-Agent Scientific Paper Analysis Report
-**Generated:** 2026-03-24 13:01  
-**Source:** arxiv:2005.14165  
-**Detected Title:** Language Models are Few-Shot Learners
+**Generated:** 2026-03-25 10:50  
+**Source:** arxiv:1810.04805  
+**Detected Title:** BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding
 
 ---
 
 ## 1. Paper Summary
-GPT-3 is an autoregressive language model with 175 billion parameters, 10x more than any previous non-sparse language model. It achieves strong performance on many NLP datasets, including translation, question-answering, and cloze tasks. It can generate samples of news articles which human evaluators have difﬁculty distinguishing from articles written by humans.
+We introduce a new language representation model called BERT, which stands for Bidirectional Encoder Representations from Transformers. BERT is designed to pretrain deep bidirectional representations from unlabeled text by jointly conditioning on both left and right context in all layers. It obtains new state-of-the-art results on eleven natural language processing tasks.
 
 ---
 
@@ -16,20 +16,20 @@ GPT-3 is an autoregressive language model with 175 billion parameters, 10x more 
 - **Graph saved to:** `outputs/citation_graph.png`
 
 ### Sample References
-  - Marcin Andrychowicz, Misha Denil, Sergio Gomez, Matthew W Hoffman, David Pfau, Tom Schaul, Brendan Shillingford, and Nando De Freitas. Learning to learn by gradient descent by gradient descent. In Advances in neural information processing systems, pages 3981–3989, 2016.
-  - WeChat AI. Tr-mt (ensemble), December 2019.
-  - Roee Aharoni, Melvin Johnson, and Orhan Firat. Massively multilingual neural machine translation. In Proceedings of the 2019 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies, Volume 1 (Long and Short Papers), 2019.
-  - Su Lin Blodgett, Solon Barocas, Hal Daum´e III, and Hanna Wallach. Language (technology) is power: A critical survey of “bias” in nlp. arXiv preprint arXiv:2005.14050, 2020.
-  - Jonathan Berant, Andrew Chou, Roy Frostig, and Percy Liang. Semantic parsing on freebase from question-answer pairs. In Proceedings of the 2013 conference on empirical methods in natural language processing, pages 1533–1544, 2013.
+  - Contextual string embeddings for sequence
+  - Rami Al-Rfou, Dokook Choe, Noah Constant, Mandy
+  - Rie Kubota Ando and Tong Zhang. 2005. A framework
+  - The ﬁfth PASCAL recognizing textual entailment
+  - Domain adaptation with structural correspon-
 
 ---
 
 ## 3. Methodology Extraction
 ### Datasets Identified
   - arxiv
-  - common crawl
   - glue
-  - superglue
+  - squad
+  - voc
 
 ### Evaluation Metrics
   - em
@@ -38,22 +38,21 @@ GPT-3 is an autoregressive language model with 175 billion parameters, 10x more 
   - wer
 
 ### Model Architectures / Techniques
+  - attention
+  - bert
+  - encoder
+  - fine-tun
   - gpt
+  - lstm
   - transformer
 
 ---
 
 ## 4. Critical Analysis
 ### Limitations
-  - limitation to this approach is that while
-the architecture is task-agnostic, there is still a need for task-speciﬁc datasets and task-speciﬁc ﬁne-tuning: to achieve
-strong performance on a desired task typically requires ﬁne-tuning on a dataset of thousands to hundreds of thousands
-of examples speciﬁc to that task.
-  - Removing this limitation would be desirable, for several reasons.
-  - Aside from pointing
-to a conceptual limitation in our current NLP techniques, this adaptability has practical advantages – it allows humans
-to seamlessly mix together or switch between many tasks and skills, for example performing addition during a lengthy
-dialogue.
+  - limitation is that standard language models are
+unidirectional, and this limits the choice of archi-
+tectures that can be used during pre-training.
 
 ### Future Research Directions
   - No explicit future work section detected in this paper.
@@ -63,10 +62,10 @@ dialogue.
 ## 5. Agent Summary
 | Agent | Status | Key Output |
 |-------|--------|------------|
-| Summarization | ✅ Complete | 364 chars |
+| Summarization | ✅ Complete | 374 chars |
 | Citation Analysis | ✅ Complete | 30 references |
 | Methodology Extractor | ✅ Complete | 4 datasets, 4 metrics |
-| Critical Analysis | ✅ Complete | 3 limitations, 1 future directions |
+| Critical Analysis | ✅ Complete | 1 limitations, 1 future directions |
 | Coordinator | ✅ Complete | Report synthesized |
 
 ---

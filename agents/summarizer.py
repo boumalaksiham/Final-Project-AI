@@ -3,6 +3,7 @@ Summarization Agent
 Uses facebook/bart-large-cnn to generate concise summaries of scientific paper text.
 """
 
+import re
 from transformers import pipeline
 
 
@@ -10,74 +11,79 @@ class SummarizationAgent:
     def __init__(self, model_name: str = "facebook/bart-large-cnn"):
         print("[SummarizationAgent] Loading model...")
         self.summarizer = pipeline("summarization", model=model_name, device=-1)
-        self.max_chunk_tokens = 1024
 
-    def _chunk_text(self, text: str, max_chars: int = 3000) -> list[str]:
-        """Split long text into overlapping chunks for summarization."""
-        # Try to extract abstract first — best dense summary source
+    def _clean_text(self, text: str) -> str:
+        """Remove PDF artifacts: hyphenated line breaks, ligatures, extra whitespace."""
+        text = re.sub(r'-\n\s*', '', text)        # join hyphenated words
+        text = re.sub(r'\n+', ' ', text)           # flatten newlines
+        text = re.sub(r'\s+', ' ', text).strip()   # normalize spaces
+        text = text.replace('\ufb01', 'fi').replace('\ufb02', 'fl')  # ligatures
+        return text
+
+    def _extract_key_sections(self, text: str) -> str:
+        """Extract abstract + intro + conclusion and combine into one passage."""
+        # Strip ARXIV_TITLE prefix if present
+        if text.startswith("ARXIV_TITLE:"):
+            text = "\n".join(text.split("\n")[2:])
+
         lower = text.lower()
-        abstract_idx = lower.find("abstract")
-        intro_idx = lower.find("introduction")
+        abstract_idx   = lower.find("abstract")
+        intro_idx      = lower.find("introduction")
         conclusion_idx = lower.rfind("conclusion")
 
         chunks = []
 
-        # Chunk 1: abstract if present
         if abstract_idx != -1:
-            end = intro_idx if intro_idx > abstract_idx else abstract_idx + 2000
-            abstract = text[abstract_idx:end].strip()
-            if len(abstract.split()) > 50:
-                chunks.append(abstract)
+            end = intro_idx if (intro_idx != -1 and intro_idx > abstract_idx) else abstract_idx + 2000
+            chunk = text[abstract_idx:end].strip()
+            if len(chunk.split()) > 30:
+                chunks.append(chunk)
 
-        # Chunk 2: introduction
         if intro_idx != -1:
-            intro = text[intro_idx:intro_idx + 3000].strip()
-            if len(intro.split()) > 50:
-                chunks.append(intro)
+            chunk = text[intro_idx:intro_idx + 2000].strip()
+            if len(chunk.split()) > 30:
+                chunks.append(chunk)
 
-        # Chunk 3: conclusion
         if conclusion_idx != -1:
-            conclusion = text[conclusion_idx:conclusion_idx + 2000].strip()
-            if len(conclusion.split()) > 50:
-                chunks.append(conclusion)
+            chunk = text[conclusion_idx:conclusion_idx + 1500].strip()
+            if len(chunk.split()) > 30:
+                chunks.append(chunk)
 
-        # Fallback: split full text if nothing found
-        if not chunks:
-            words = text.split()
-            chunk_size = max_chars // 5
-            for i in range(0, len(words), chunk_size):
-                chunks.append(" ".join(words[i : i + chunk_size]))
-
-        return chunks
-
-    def run(self, text: str) -> dict:
-        """
-        Summarize the full paper text.
-        Extracts abstract + intro + conclusion, combines them, and summarizes once.
-        Returns a dict with 'summary' and 'chunk_summaries'.
-        """
-        print("[SummarizationAgent] Summarizing paper...")
-        chunks = self._chunk_text(text)
-
-        # Combine all chunks into one passage for a richer summary
         combined = " ".join(chunks)
-        words = combined.split()
 
-        # BART handles ~700 words comfortably on CPU; truncate if longer
+        # Fallback to first 700 words if sections not found or too short
+        if len(combined.split()) < 100:
+            combined = " ".join(text.split()[:700])
+
+        # Cap at 700 words
+        words = combined.split()
         if len(words) > 700:
             combined = " ".join(words[:700])
 
-        if len(combined.split()) < 60:
-            # Not enough text — fall back to first 700 words of full text
-            combined = " ".join(text.split()[:700])
+        return combined
 
-        chunk_summaries = []
+    def run(self, text: str) -> dict:
+        """Summarize the paper text."""
+        print("[SummarizationAgent] Summarizing paper...")
+
+        combined = self._extract_key_sections(text)
+        combined = self._clean_text(combined)
+        word_count = len(combined.split())
+
         full_summary = ""
+        chunk_summaries = []
+
+        if word_count < 30:
+            print("  [SummarizationAgent] Not enough text to summarize.")
+            return {"summary": "", "chunk_summaries": []}
+
+        max_len = min(200, max(60, word_count // 3))
+        min_len = min(40, max(20, word_count // 8))
+
+        if min_len >= max_len:
+            min_len = max(10, max_len // 2)
 
         try:
-            word_count = len(combined.split())
-            max_len = min(250, max(80, word_count // 3))
-            min_len = min(60, max(30, word_count // 8))
             result = self.summarizer(
                 combined,
                 max_length=max_len,
