@@ -1,6 +1,6 @@
 """
 Multi-Agent Scientific Paper Analysis System
-Main pipeline — runs all 5 agents on a given paper.
+Main pipeline — runs all 6 agents on a given paper.
 
 Usage:
     # Analyze a local PDF:
@@ -8,6 +8,9 @@ Usage:
 
     # Analyze an arXiv paper by ID:
     python main.py --arxiv 1706.03762
+
+    # Analyze with a research topic for relevance scoring:
+    python main.py --arxiv 1706.03762 --topic "attention mechanisms NLP"
 
     # Analyze the built-in demo text:
     python main.py --demo
@@ -17,14 +20,12 @@ Demo mode:
     Vaswani et al. (2017), "Attention Is All You Need", NeurIPS 2017.
     arXiv: https://arxiv.org/abs/1706.03762
 
-    This paper introduced the Transformer architecture and I used it here
+    This paper introduced the Transformer architecture and is used here
     as a well-known benchmark text to verify the pipeline works correctly
     without needing to download or provide a PDF.
 """
 
 import argparse
-import os
-import sys
 from pathlib import Path
 
 from agents import (
@@ -33,8 +34,9 @@ from agents import (
     MethodologyExtractorAgent,
     CriticalAnalysisAgent,
     CoordinatorAgent,
+    RelevanceAgent,
 )
-from paper_loader import load_pdf, load_arxiv, load_text
+from paper_loader import load_pdf, load_arxiv, load_text, load_pubmed
 
 OUTPUT_DIR = "outputs"
 
@@ -88,8 +90,8 @@ References:
 """
 
 
-def run_pipeline(text: str, source: str = "Unknown"):
-    """Run all 5 agents on the provided text."""
+def run_pipeline(text: str, source: str = "Unknown", user_topic: str = ""):
+    """Run all 6 agents on the provided text."""
     Path(OUTPUT_DIR).mkdir(exist_ok=True)
 
     print("\n" + "=" * 60)
@@ -99,72 +101,97 @@ def run_pipeline(text: str, source: str = "Unknown"):
     # Agent 1: Summarization
     summarizer = SummarizationAgent()
     summary_output = summarizer.run(text)
-    print(f"  Summary generated ({len(summary_output['summary'])} chars)\n")
+    print(f"  ✓ Summary generated ({len(summary_output['summary'])} chars)\n")
 
     # Agent 2: Citation Analysis
     citation_agent = CitationAnalysisAgent()
     citation_output = citation_agent.run(text, output_dir=OUTPUT_DIR)
-    print(f"  {citation_output['num_references']} references extracted\n")
+    print(f"  ✓ {citation_output['num_references']} references extracted\n")
 
     # Agent 3: Methodology Extraction
     methodology_agent = MethodologyExtractorAgent()
     methodology_output = methodology_agent.run(text)
-    print(f"  Methodology extracted\n")
+    print(f"  ✓ Methodology extracted\n")
 
     # Agent 4: Critical Analysis
     critical_agent = CriticalAnalysisAgent()
     critical_output = critical_agent.run(text)
-    print(f"  {critical_output['num_limitations_found']} limitations found\n")
+    print(f"  ✓ {critical_output['num_limitations_found']} limitations found\n")
 
-    # Agent 5: Coordinator
+    # Agent 5: Relevance Scoring + TL;DR
+    relevance_agent = RelevanceAgent()
+    relevance_output = relevance_agent.run(
+        text=text,
+        summary=summary_output["summary"],
+        methodology=methodology_output,
+        citations=citation_output,
+        user_topic=user_topic,
+    )
+    print(f"  ✓ TL;DR and relevance score generated\n")
+
+    # Agent 6: Coordinator
     coordinator = CoordinatorAgent()
     final_output = coordinator.run(
         summary_output,
         citation_output,
         methodology_output,
         critical_output,
+        relevance_output=relevance_output,
         paper_source=source,
         output_dir=OUTPUT_DIR,
     )
 
     print("\n" + "=" * 60)
-    print(f"  Analysis complete!")
-    print(f"  Report: {final_output['report_path']}")
-    print(f"  Graph:  {citation_output.get('graph_image', 'N/A')}")
-    print(f"  JSON:   {final_output['json_path']}")
+    print(f"  ✅ Analysis complete!")
+    print(f"  📄 Report: {final_output['report_path']}")
+    print(f"  📊 Graph:  {citation_output.get('graph_image', 'N/A')}")
+    print(f"  🗂  JSON:   {final_output['json_path']}")
     print("=" * 60 + "\n")
 
-    # Print report to the console
     print(final_output["report"])
+    return final_output
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Multi-Agent Scientific Paper Analysis")
+    parser = argparse.ArgumentParser(
+        description="Multi-Agent Scientific Paper Analysis System"
+    )
     group = parser.add_mutually_exclusive_group(required=True)
-    group.add_argument("--pdf", type=str, help="Path to a local PDF file")
+    group.add_argument("--pdf",   type=str, help="Path to a local PDF file")
     group.add_argument("--arxiv", type=str, help="arXiv paper ID (e.g. 1706.03762)")
-    group.add_argument("--txt", type=str, help="Path to a plain text file")
-    group.add_argument("--demo", action="store_true", help="Run on built-in demo paper")
+    group.add_argument("--txt",    type=str, help="Path to a plain text file")
+    group.add_argument("--pubmed", type=str, help="PubMed ID (e.g. 33278872)")
+    group.add_argument("--demo",   action="store_true", help="Run on built-in demo paper")
+    parser.add_argument(
+        "--topic", type=str, default="",
+        help="Your research interest for relevance scoring (e.g. 'transformer NLP')"
+    )
     args = parser.parse_args()
 
     if args.demo:
         print("[Main] Running in demo mode (Attention Is All You Need excerpt)...")
-        run_pipeline(DEMO_TEXT, source="demo/attention_is_all_you_need")
+        run_pipeline(DEMO_TEXT, source="demo/attention_is_all_you_need",
+                     user_topic=args.topic)
 
     elif args.pdf:
         print(f"[Main] Loading PDF: {args.pdf}")
         text = load_pdf(args.pdf)
-        run_pipeline(text, source=args.pdf)
+        run_pipeline(text, source=args.pdf, user_topic=args.topic)
 
     elif args.arxiv:
         print(f"[Main] Fetching arXiv: {args.arxiv}")
         text, path = load_arxiv(args.arxiv)
-        run_pipeline(text, source=f"arxiv:{args.arxiv}")
+        run_pipeline(text, source=f"arxiv:{args.arxiv}", user_topic=args.topic)
 
     elif args.txt:
         print(f"[Main] Loading text file: {args.txt}")
         text = load_text(args.txt)
-        run_pipeline(text, source=args.txt)
+        run_pipeline(text, source=args.txt, user_topic=args.topic)
+
+    elif args.pubmed:
+        print(f"[Main] Fetching PubMed: {args.pubmed}")
+        text, title = load_pubmed(args.pubmed)
+        run_pipeline(text, source=f"pubmed:{args.pubmed}", user_topic=args.topic)
 
 
 if __name__ == "__main__":

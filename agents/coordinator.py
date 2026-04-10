@@ -24,6 +24,7 @@ class CoordinatorAgent:
         citation_output: dict,
         methodology_output: dict,
         critical_output: dict,
+        relevance_output: dict = None,
         paper_source: str = "Unknown",
     ) -> str:
         """Combine all agent outputs into a structured markdown report."""
@@ -31,11 +32,39 @@ class CoordinatorAgent:
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M")
         title = citation_output.get("paper_title", "Unknown Paper")
 
-        report = f"""# Multi-Agent Scientific Paper Analysis Report
-**Generated:** {timestamp}  
-**Source:** {paper_source}  
-**Detected Title:** {title}
+        # Relevance section
+        if relevance_output and relevance_output.get("tldr"):
+            tldr = relevance_output["tldr"]
+            topic = relevance_output.get("user_topic", "")
+            score = relevance_output.get("relevance_score")
+            verdict = relevance_output.get("relevance_verdict", "")
+            matched = relevance_output.get("matched_keywords", [])
 
+            if topic and score is not None:
+                relevance_section = f"""---
+
+## 0. Quick Triage
+**TL;DR:** {tldr}
+
+**Your research topic:** {topic}
+**Relevance score:** {score}/100
+**Verdict:** {verdict}
+**Matched keywords:** {', '.join(matched) if matched else 'None'}
+"""
+            else:
+                relevance_section = f"""---
+
+## 0. Quick Triage
+**TL;DR:** {tldr}
+"""
+        else:
+            relevance_section = ""
+
+        report = f"""# Multi-Agent Scientific Paper Analysis Report
+**Generated:** {timestamp}
+**Source:** {paper_source}
+**Detected Title:** {title}
+{relevance_section}
 ---
 
 ## 1. Paper Summary
@@ -81,6 +110,7 @@ class CoordinatorAgent:
 | Citation Analysis | ✅ Complete | {citation_output.get("num_references", 0)} references |
 | Methodology Extractor | ✅ Complete | {len(methodology_output.get("datasets_identified",[]))} datasets, {len(methodology_output.get("evaluation_metrics",[]))} metrics |
 | Critical Analysis | ✅ Complete | {critical_output.get("num_limitations_found",0)} limitations, {critical_output.get("num_future_directions_found",0)} future directions |
+| Relevance & TL;DR | ✅ Complete | Score: {relevance_output.get("relevance_score", "N/A") if relevance_output else "N/A"}/100 |
 | Coordinator | ✅ Complete | Report synthesized |
 
 ---
@@ -94,12 +124,14 @@ class CoordinatorAgent:
         citation_output: dict,
         methodology_output: dict,
         critical_output: dict,
+        relevance_output: dict = None,
         paper_source: str = "Unknown",
         output_dir: str = "outputs",
     ) -> dict:
         print("[CoordinatorAgent] Synthesizing final report...")
         report_md = self.synthesize(
-            summary_output, citation_output, methodology_output, critical_output, paper_source
+            summary_output, citation_output, methodology_output,
+            critical_output, relevance_output, paper_source
         )
 
         # Save report
@@ -107,7 +139,7 @@ class CoordinatorAgent:
         with open(report_path, "w", encoding="utf-8") as f:
             f.write(report_md)
 
-        # Save raw JSON of all outputs
+        # Save raw JSON
         json_path = str(Path(output_dir) / "raw_outputs.json")
         with open(json_path, "w", encoding="utf-8") as f:
             json.dump(
@@ -116,6 +148,7 @@ class CoordinatorAgent:
                     "citations": citation_output,
                     "methodology": methodology_output,
                     "critical": critical_output,
+                    "relevance": relevance_output or {},
                 },
                 f,
                 indent=2,
