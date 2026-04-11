@@ -142,10 +142,10 @@ def run_pipeline(text: str, source: str = "Unknown", user_topic: str = ""):
     )
 
     print("\n" + "=" * 60)
-    print(f"  ✅ Analysis complete!")
-    print(f"  📄 Report: {final_output['report_path']}")
-    print(f"  📊 Graph:  {citation_output.get('graph_image', 'N/A')}")
-    print(f"  🗂  JSON:   {final_output['json_path']}")
+    print(f"   Analysis complete!")
+    print(f"   Report: {final_output['report_path']}")
+    print(f"   Graph:  {citation_output.get('graph_image', 'N/A')}")
+    print(f"    JSON:   {final_output['json_path']}")
     print("=" * 60 + "\n")
 
     print(final_output["report"])
