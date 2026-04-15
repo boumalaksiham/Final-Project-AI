@@ -101,22 +101,22 @@ def run_pipeline(text: str, source: str = "Unknown", user_topic: str = ""):
     # Agent 1: Summarization
     summarizer = SummarizationAgent()
     summary_output = summarizer.run(text)
-    print(f"  ✓ Summary generated ({len(summary_output['summary'])} chars)\n")
+    print(f"   Summary generated ({len(summary_output['summary'])} chars)\n")
 
     # Agent 2: Citation Analysis
     citation_agent = CitationAnalysisAgent()
     citation_output = citation_agent.run(text, output_dir=OUTPUT_DIR)
-    print(f"  ✓ {citation_output['num_references']} references extracted\n")
+    print(f"   {citation_output['num_references']} references extracted\n")
 
     # Agent 3: Methodology Extraction
     methodology_agent = MethodologyExtractorAgent()
     methodology_output = methodology_agent.run(text)
-    print(f"  ✓ Methodology extracted\n")
+    print(f"   Methodology extracted\n")
 
     # Agent 4: Critical Analysis
     critical_agent = CriticalAnalysisAgent()
     critical_output = critical_agent.run(text)
-    print(f"  ✓ {critical_output['num_limitations_found']} limitations found\n")
+    print(f"   {critical_output['num_limitations_found']} limitations found\n")
 
     # Agent 5: Relevance Scoring + TL;DR
     relevance_agent = RelevanceAgent()
@@ -127,7 +127,7 @@ def run_pipeline(text: str, source: str = "Unknown", user_topic: str = ""):
         citations=citation_output,
         user_topic=user_topic,
     )
-    print(f"  ✓ TL;DR and relevance score generated\n")
+    print(f"   TL;DR and relevance score generated\n")
 
     # Agent 6: Coordinator
     coordinator = CoordinatorAgent()
