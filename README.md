@@ -77,7 +77,9 @@ paper_analysis/
 ├── data/                      # Cached PDFs (gitignored)
 └── outputs/                   # Generated reports, graphs, JSON (gitignored)
 ```
-
+All source files are thoroughly commented. Each agent file 
+contains inline comments explaining the logic of each 
+processing step.
 ---
 
 ## Setup
