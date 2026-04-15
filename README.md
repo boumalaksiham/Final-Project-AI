@@ -272,6 +272,22 @@ Scored 1–5 on: Accuracy (developer perspective), Completeness (developer), Tri
 
 ---
 
+## Libraries and Citations
+
+- **BART** — Lewis et al., "BART: Denoising Sequence-to-Sequence 
+  Pre-training," ACL 2020.
+- **HuggingFace Transformers** — Wolf et al., "Transformers: 
+  State-of-the-Art NLP," EMNLP 2020.
+- **spaCy** — Honnibal et al., Explosion AI, 2020. 
+  https://spacy.io
+- **NetworkX** — Hagberg et al., SciPy 2008.
+- **PyMuPDF** — https://pymupdf.readthedocs.io
+- **PyTorch** — Paszke et al., NeurIPS 2019.
+- **rouge-score** — https://github.com/google-research/google-research/tree/master/rouge
+- **arXiv API** — https://arxiv.org/help/api
+- **NCBI E-utilities (PubMed)** — 
+  https://www.ncbi.nlm.nih.gov/books/NBK25501/
+
 ## Course
 
 EECE 5644 — Machine Learning  
